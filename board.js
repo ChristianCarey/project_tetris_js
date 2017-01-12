@@ -18,33 +18,30 @@ GAME.Board = function() {
   };
 
   var tic = function() {
+    return _ticTetromino(_ticCurrentTetromino);
+  };
+
+  var moveTetrominoWithInput = function(keycode) {
+    return _ticTetromino(function(){_currentTetromino.moveWithInput(keycode)
+    });
+  }
+
+  var _ticTetromino = function(callback) {
     _newPlacedBlocks = false;
     _saveCurrentTetromino();
     if (!_currentTetromino) {
       _createCurrentTetromino();
     }
-    _ticCurrentTetromino();
+    callback();
+    _handleCollision();
+    return _getBoardState();
+  }
+
+  var _handleCollision = function() {
     if (_checkCollision()) {
       _processCollision();
     };
-    return _getBoardState();
-  };
-
-  var moveTetromino = function(keycode) {
-    if (keycode === 65 || keycode === 37) {
-      // left
-      _currentTetromino.tic({ x: -1, y: 0 });
-    } else if (keycode === 32) {
-      // space (rotate)
-      //_currentTetromino
-    } else if (keycode === 68 || keycode === 39) {
-      // right
-      _currentTetromino.tic({ x: 1, y: 0 });
-    } else if (keycode === 83 || keycode === 40) {
-      // down (drop)
-      //_currentTetromino
-    }
-  };
+  }
 
   var _setRows = function() {
     _rows = new Array(_height);
@@ -79,7 +76,9 @@ GAME.Board = function() {
   };
 
   var _saveCurrentTetromino = function() {
-    _boardState.lastTetromino = _currentTetromino;
+    if (_currentTetromino){
+      _boardState.lastTetrominoCoords = _currentTetromino.coords();
+    }
   };
 
   var _checkCollision = function() {
@@ -114,7 +113,7 @@ GAME.Board = function() {
   return {
     init: init,
     tic: tic,
-    moveTetromino: moveTetromino
+    moveTetrominoWithInput: moveTetrominoWithInput
   };
 
 }();

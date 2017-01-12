@@ -10,6 +10,11 @@ GAME.TetrominoFactory = function() {
     return new _Tetromino(shape, originX);
   };
 
+  var _keycodeCoords = {
+    97: { x: -1, y: 0 },
+    100: { x: 1, y: 0},
+  }
+
   var _shapes = [
     {
       name: "I",
@@ -65,6 +70,19 @@ GAME.TetrominoFactory = function() {
       });
     };
 
+    this.moveWithInput = function(keycode) {
+      if (keycode === 97 || keycode === 100) {
+        this.tic(_keycodeCoords[keycode]);
+      }
+    }
+
+    this.coords = function() {
+      var coords = new Array(4);
+      this.blocks.forEach(function(block, index) {
+        coords[index] = { x: block.x, y: block.y }
+      })
+      return coords;
+    }
   };
 
 
