@@ -15,6 +15,3 @@ GAME.BlockFactory = function() {
     }
   }
 }();
-// block
-  // x and y
-  // color

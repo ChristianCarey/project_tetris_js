@@ -66,10 +66,6 @@ GAME.TetrominoFactory = function() {
     createRandom: function(originX) {
       var shape = _randomShape();
       return new _Tetromino(shape, originX);
-    },
-
-    createDup: function(tetromino) {
-
     }
   };
 }();

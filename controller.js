@@ -5,18 +5,22 @@ GAME.Controller = function() {
 
   var _board = GAME.Board;
   var _view = GAME.View;
+  var keyPressCallback = function(e) {
+    var boardState _board.moveTetromino(e.which);
+    _view.render(boardState);
+  };
 
   var _loop = function() {
-  var interval = setInterval(function(){
-    var boardState = _board.tic();
-    _view.render(boardState);
-  }, 100);
+    var interval = setInterval(function(){
+      var boardState = _board.tic();
+      _view.render(boardState);
+    }, 100);
   }
 
   return {
     play: function() {
       var initialBoard = _board.init();
-      _view.init(initialBoard);
+      _view.init(initialBoard, keyPressCallback);
       _loop();
     }
   }

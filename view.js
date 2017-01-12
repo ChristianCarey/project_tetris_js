@@ -44,9 +44,10 @@ GAME.View = function() {
   }
 
   return {
-    init: function(rows) {
+    init: function(rows, listeners) {
       _$board = $("#board");
       _setRows(rows);
+      _attachListeners(listeners);
     },
 
     render: function(boardState) {
@@ -60,21 +61,5 @@ GAME.View = function() {
         _renderTetromino(boardState.currentTetromino);
       }
     }
-
   };
-
 }();
-  // this.clear(boardstate)
-  // boardstate.draw(boardstate)
-
-// On keydown
-  // this.game.rotate(this.current)
-
-// clear (boardstate) {
-//  _clearTetromino(boardstate.lastTetromino)
-//  _drawTetromino(boardstate.currentTetromino)
-//  if boardstate.last.collided {
-//    _clearStack(boardstate.lastStack)
-//    _drawStack(boardstate.currentStack)
-// }
-//}

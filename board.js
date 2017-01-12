@@ -13,6 +13,18 @@ GAME.Board = function() {
   var _boardState = {};
   var _placedBlocks = [];
 
+  var _moveTetromino = function(keycode) {
+    if (keycode === 65 || keycode 37) {
+      // left
+    } else if (keycode === 32) {
+      // space (rotate)
+    } else if (keycode === 68 || keycode 39) {
+      // right
+    } else if (keycode === 83 || keycode 40) {
+      // down (drop)
+    }
+  }
+
   var _setRows = function() {
     _rows = new Array(_height);
     for (var i = 0; i < _height; i++) {
@@ -71,7 +83,7 @@ GAME.Board = function() {
   };
 
   var _blockCollision = function(tetrominoBlock, block) {
-    return tetrominoBlock.y + 1 === block.y && tetrominoBlock.x === block.x
+    return tetrominoBlock.y + 1 === block.y && tetrominoBlock.x === block.x;
   };
 
   var _atBottom = function(tetrominoBlock) {
