@@ -36,7 +36,9 @@ GAME.View = function() {
 
   var _renderBlock = function(block) {
     var $cell = _findCell(block.x, block.y);
+console.log($cell, $cell.attr("class"));
     $cell.addClass(block.name);
+console.log($cell, $cell.attr("class"));
   };
 
   var _findCell = function(x, y) {
