@@ -13,17 +13,38 @@ GAME.Board = function() {
   var _boardState = {};
   var _placedBlocks = [];
 
-  var _moveTetromino = function(keycode) {
-    if (keycode === 65 || keycode 37) {
+  var init = function() {
+    return _setRows();
+  };
+
+  var tic = function() {
+    _newPlacedBlocks = false;
+    _saveCurrentTetromino();
+    if (!_currentTetromino) {
+      _createCurrentTetromino();
+    }
+    _ticCurrentTetromino();
+    if (_checkCollision()) {
+      _processCollision();
+    };
+    return _getBoardState();
+  };
+
+  var moveTetromino = function(keycode) {
+    if (keycode === 65 || keycode === 37) {
       // left
+      _currentTetromino.tic({ x: -1, y: 0 });
     } else if (keycode === 32) {
       // space (rotate)
-    } else if (keycode === 68 || keycode 39) {
+      //_currentTetromino
+    } else if (keycode === 68 || keycode === 39) {
       // right
-    } else if (keycode === 83 || keycode 40) {
+      _currentTetromino.tic({ x: 1, y: 0 });
+    } else if (keycode === 83 || keycode === 40) {
       // down (drop)
+      //_currentTetromino
     }
-  }
+  };
 
   var _setRows = function() {
     _rows = new Array(_height);
@@ -39,7 +60,7 @@ GAME.Board = function() {
 
   var _randomOriginX = function() {
     return 5;
-  }
+  };
 
   var _createCurrentTetromino = function() {
     var currentTetromino = _TetrominoFactory.createRandom(_randomOriginX());
@@ -54,7 +75,7 @@ GAME.Board = function() {
   };
 
   var _ticCurrentTetromino = function() {
-    _currentTetromino.tic()
+    _currentTetromino.tic({ x: 0, y: 1 })
   };
 
   var _saveCurrentTetromino = function() {
@@ -91,58 +112,9 @@ GAME.Board = function() {
   };
 
   return {
-    init: function() {
-      return _setRows();
-    },
-
-    tic: function() {
-      _newPlacedBlocks = false;
-      _saveCurrentTetromino();
-      if (!_currentTetromino) {
-        _createCurrentTetromino();
-      }
-      _ticCurrentTetromino();
-      if (_checkCollision()) {
-        _processCollision();
-      };
-      return _getBoardState();
-    }
+    init: init,
+    tic: tic,
+    moveTetromino: moveTetromino
   };
 
 }();
-/*
-  tic {
-    _move current piece
-    if current piece.collided()
-      _update stack
-      _newCurrentPiece
-    }
-
-  tic returns:
-  Board State = {
-    current piece
-    stack of rows {
-      arrays of full or empty cells
-    }
-  }
-*/
-
-/*
-  update stack {
-    _add current piece to stack
-    _check for complete rows
-    _remove complete rows
-  }
-*/
-
-/*
-  update piece {
-    _move piece
-    _check for collision
-  }
-*/
-
-
-// Collission check
-  // See if any moving tetrominos bottom bounds <= the top bounds of any settled tetrominos
-      // If so, set piece to "collided"

@@ -5,6 +5,11 @@ GAME.TetrominoFactory = function() {
 
   var BlockFactory = GAME.BlockFactory;
 
+  var createRandom = function(originX) {
+    var shape = _randomShape();
+    return new _Tetromino(shape, originX);
+  };
+
   var _shapes = [
     {
       name: "I",
@@ -53,9 +58,10 @@ GAME.TetrominoFactory = function() {
       })
     });
 
-    this.tic = function() {
+    this.tic = function(velocity) {
       this.blocks.forEach(function(block) {
-        block.y++;
+        block.x += velocity.x;
+        block.y += velocity.y;
       });
     };
 
@@ -63,9 +69,7 @@ GAME.TetrominoFactory = function() {
 
 
   return {
-    createRandom: function(originX) {
-      var shape = _randomShape();
-      return new _Tetromino(shape, originX);
-    }
+    createRandom: createRandom
   };
+
 }();

@@ -6,7 +6,7 @@ GAME.Controller = function() {
   var _board = GAME.Board;
   var _view = GAME.View;
   var keyPressCallback = function(e) {
-    var boardState _board.moveTetromino(e.which);
+    var boardState = _board.moveTetromino(e.which);
     _view.render(boardState);
   };
 
